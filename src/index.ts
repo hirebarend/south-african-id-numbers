@@ -1,6 +1,6 @@
 import { checksum, generateRandomNumber } from './functions';
 
-export function generate(): string {
+export function generateSouthAfricanIdNumber(): string {
   const timestamp: number = new Date().getTime();
 
   const dateOfBirth: Date = new Date(
@@ -20,7 +20,25 @@ export function generate(): string {
   return `${str}${checksum(str)}`;
 }
 
-export function parse(str: string | null): {
+export function isValidSouthAfricanIdNumber(str: string | null): boolean {
+  if (!str) {
+    return false;
+  }
+
+  if (!str.match(/^\d{10}[0-1]\d{2}$/)) {
+    return false;
+  }
+
+  const c: number = checksum(str.substring(0, str.length - 1));
+
+  if (parseInt(str[str.length - 1]) !== c) {
+    return false;
+  }
+
+  return true;
+}
+
+export function parseSouthAfricanIdNumber(str: string | null): {
   citizen: boolean;
   dateOfBirth: string;
   gender: 'FEMALE' | 'MALE';
@@ -53,22 +71,4 @@ export function parse(str: string | null): {
     gender: parseInt(regExpExecArray[4]) < 5000 ? 'FEMALE' : 'MALE',
     permanentResident: regExpExecArray[5] === '1',
   };
-}
-
-export function validate(str: string | null): boolean {
-  if (!str) {
-    return false;
-  }
-
-  if (!str.match(/^\d{10}[0-1]\d{2}$/)) {
-    return false;
-  }
-
-  if (
-    parseInt(str[str.length - 1]) !== checksum(str.substring(0, str.length - 1))
-  ) {
-    return false;
-  }
-
-  return true;
 }

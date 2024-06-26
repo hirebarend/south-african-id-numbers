@@ -1,5 +1,8 @@
 import assert from 'assert';
-import { parse, validate } from './index';
+import {
+  isValidSouthAfricanIdNumber,
+  parseSouthAfricanIdNumber,
+} from './index';
 import { checksum } from './functions';
 
 describe('#checksum(str: string): number', () => {
@@ -12,9 +15,31 @@ describe('#checksum(str: string): number', () => {
   });
 });
 
-describe('#parse(str: string)', () => {
+describe('#isValidSouthAfricanIdNumber(str: string): boolean', () => {
+  it('given a non 13 digit numeric should return false', () => {
+    assert.equal(isValidSouthAfricanIdNumber('1234567890'), false);
+  });
+
+  it('given a 13 digit alphanumeric should return false', () => {
+    assert.equal(isValidSouthAfricanIdNumber('A1B1C1D1E1F1G'), false);
+  });
+
+  it('given third last digit is not 0 or 1 should return false', () => {
+    assert.equal(isValidSouthAfricanIdNumber('7111207908203'), false);
+  });
+
+  it('given third last digit is 0 should return true', () => {
+    assert.equal(isValidSouthAfricanIdNumber('7111207908003'), true);
+  });
+
+  it('given third last digit is 1 should return true', () => {
+    assert.equal(isValidSouthAfricanIdNumber('7111207908102'), true);
+  });
+});
+
+describe('#parseSouthAfricanIdNumber(str: string): {}', () => {
   it('given 7111207908003', () => {
-    assert.deepStrictEqual(parse('7111207908003'), {
+    assert.deepStrictEqual(parseSouthAfricanIdNumber('7111207908003'), {
       citizen: true,
       dateOfBirth: '1971-11-20',
       gender: 'MALE',
@@ -23,33 +48,11 @@ describe('#parse(str: string)', () => {
   });
 
   it('given 7401308315053', () => {
-    assert.deepStrictEqual(parse('7401308315053'), {
+    assert.deepStrictEqual(parseSouthAfricanIdNumber('7401308315053'), {
       citizen: true,
       dateOfBirth: '1974-01-30',
       gender: 'MALE',
       permanentResident: false,
     });
-  });
-});
-
-describe('#validate(str: string): boolean', () => {
-  it('given a non 13 digit numeric should return false', () => {
-    assert.equal(validate('1234567890'), false);
-  });
-
-  it('given a 13 digit alphanumeric should return false', () => {
-    assert.equal(validate('A1B1C1D1E1F1G'), false);
-  });
-
-  it('given third last digit is not 0 or 1 should return false', () => {
-    assert.equal(validate('7111207908203'), false);
-  });
-
-  it('given third last digit is 0 should return true', () => {
-    assert.equal(validate('7111207908003'), true);
-  });
-
-  it('given third last digit is 1 should return true', () => {
-    assert.equal(validate('7111207908102'), true);
   });
 });

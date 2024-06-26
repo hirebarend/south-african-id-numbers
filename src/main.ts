@@ -1,9 +1,13 @@
-import { generate, parse, validate } from '.';
+import {
+  generateSouthAfricanIdNumber,
+  isValidSouthAfricanIdNumber,
+  parseSouthAfricanIdNumber,
+} from '.';
 
-const str: string = generate();
+const str: string = generateSouthAfricanIdNumber();
 
 console.log(str);
 
-console.log(validate(str));
+console.log(isValidSouthAfricanIdNumber(str));
 
-console.log(JSON.stringify(parse(str)));
+console.log(JSON.stringify(parseSouthAfricanIdNumber(str)));
