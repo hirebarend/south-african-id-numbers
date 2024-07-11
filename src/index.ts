@@ -1,6 +1,8 @@
 import { checksum, generateRandomNumber } from './functions';
 
-export function generateSouthAfricanIdNumber(): string {
+export function generateSouthAfricanIdNumber(
+  permanentResident: boolean = true,
+): string {
   const timestamp: number = new Date().getTime();
 
   const dateOfBirth: Date = new Date(
@@ -15,9 +17,13 @@ export function generateSouthAfricanIdNumber(): string {
 
   const ssss: string = `${generateRandomNumber(1000, 9999)}`;
 
-  const str: string = `${dateOfBirth.getFullYear() % 100}${padding(`${dateOfBirth.getMonth() + 1}`, '0', 2)}${dateOfBirth.getDate()}${ssss}0${generateRandomNumber(0, 9)}`;
+  const str: string = `${padding(`${dateOfBirth.getFullYear() % 100}`, '0', 2)}${padding(`${dateOfBirth.getMonth() + 1}`, '0', 2)}${padding(`${dateOfBirth.getDate()}`, '0', 2)}${ssss}${permanentResident ? '0' : '1'}${generateRandomNumber(0, 9)}`;
 
-  return `${str}${checksum(str)}`;
+  const c: string = checksum(str).toString();
+
+  const result: string = `${str}${c}`;
+
+  return result;
 }
 
 export function isValidSouthAfricanIdNumber(str: string | null): boolean {

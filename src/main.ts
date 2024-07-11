@@ -1,13 +1,9 @@
-import {
-  generateSouthAfricanIdNumber,
-  isValidSouthAfricanIdNumber,
-  parseSouthAfricanIdNumber,
-} from '.';
+import { generateSouthAfricanIdNumber, isValidSouthAfricanIdNumber } from '.';
 
-const str: string = generateSouthAfricanIdNumber();
+for (let i = 0; i < 10_000_000; i++) {
+  const str: string = generateSouthAfricanIdNumber();
 
-console.log(str);
-
-console.log(isValidSouthAfricanIdNumber(str));
-
-console.log(JSON.stringify(parseSouthAfricanIdNumber(str)));
+  if (!isValidSouthAfricanIdNumber(str)) {
+    throw new Error(`invalid: ${str}`);
+  }
+}

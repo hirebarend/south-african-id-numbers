@@ -13,26 +13,30 @@ describe('#checksum(str: string): number', () => {
   it('given 711120790800 should return 3', () => {
     assert.equal(checksum('711120790800'), 3);
   });
+
+  it('given 820118748804 should return 0', () => {
+    assert.equal(checksum('820118748804'), 0);
+  });
 });
 
 describe('#isValidSouthAfricanIdNumber(str: string): boolean', () => {
-  it('given a non 13 digit numeric should return false', () => {
+  it('given a non 13 character numeric input should return false', () => {
     assert.equal(isValidSouthAfricanIdNumber('1234567890'), false);
   });
 
-  it('given a 13 digit alphanumeric should return false', () => {
+  it('given a 13 character alphanumeric input should return false', () => {
     assert.equal(isValidSouthAfricanIdNumber('A1B1C1D1E1F1G'), false);
   });
 
-  it('given third last digit is not 0 or 1 should return false', () => {
+  it('given third last character is not 0 or 1 should return false', () => {
     assert.equal(isValidSouthAfricanIdNumber('7111207908203'), false);
   });
 
-  it('given third last digit is 0 should return true', () => {
+  it('given third last character is 0 should return true', () => {
     assert.equal(isValidSouthAfricanIdNumber('7111207908003'), true);
   });
 
-  it('given third last digit is 1 should return true', () => {
+  it('given third last character is 1 should return true', () => {
     assert.equal(isValidSouthAfricanIdNumber('7111207908102'), true);
   });
 });
