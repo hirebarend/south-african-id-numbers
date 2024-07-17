@@ -31,7 +31,21 @@ export function isValidSouthAfricanIdNumber(str: string | null): boolean {
     return false;
   }
 
-  if (!str.match(/^\d{10}[0-1]\d{2}$/)) {
+  const regex: RegExp = new RegExp(
+    /^(\d{2})(\d{2})(\d{2})(\d{4})([0-1])\d{2}$/,
+  );
+
+  const regExpExecArray: RegExpExecArray | null = regex.exec(str);
+
+  if (!regExpExecArray) {
+    return false;
+  }
+
+  if (parseInt(regExpExecArray[2]) > 12) {
+    return false;
+  }
+
+  if (parseInt(regExpExecArray[3]) > 31) {
     return false;
   }
 
@@ -61,6 +75,14 @@ export function parseSouthAfricanIdNumber(str: string | null): {
   const regExpExecArray: RegExpExecArray | null = regex.exec(str);
 
   if (!regExpExecArray) {
+    throw new Error('invalid str');
+  }
+
+  if (parseInt(regExpExecArray[2]) > 12) {
+    throw new Error('invalid str');
+  }
+
+  if (parseInt(regExpExecArray[3]) > 31) {
     throw new Error('invalid str');
   }
 

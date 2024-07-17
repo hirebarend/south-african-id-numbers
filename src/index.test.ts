@@ -32,6 +32,14 @@ describe('#isValidSouthAfricanIdNumber(str: string): boolean', () => {
     assert.equal(isValidSouthAfricanIdNumber('7111207908203'), false);
   });
 
+  it('given invalid month input should return false', () => {
+    assert.equal(isValidSouthAfricanIdNumber('7115207908004'), false);
+  });
+
+  it('given invalid day input should return false', () => {
+    assert.equal(isValidSouthAfricanIdNumber('7111507908000'), false);
+  });
+
   it('given third last character is 0 should return true', () => {
     assert.equal(isValidSouthAfricanIdNumber('7111207908003'), true);
   });
