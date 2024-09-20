@@ -15,9 +15,9 @@ steps:
     command: custom
     verbose: false
     customCommand: 'run build'
-- task: Npm@1
-  displayName: 'npm publish'
-  inputs:
-    command: publish
-    verbose: false
-    publishEndpoint: 'Npm (hirebarend)'
+# - task: Npm@1
+#   displayName: 'npm publish'
+#   inputs:
+#     command: publish
+#     verbose: false
+#     publishEndpoint: 'Npm (hirebarend)'
