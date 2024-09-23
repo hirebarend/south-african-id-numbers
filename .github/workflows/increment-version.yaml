@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
       - run: git config --global user.name 'hirebarend'
       - run: git config --global user.email 'hirebarend@gmail.com'
       - run: npm version patch -m "[RELEASE] %s"
