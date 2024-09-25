@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/assert": "^1.5.10",
-    "@types/css": "^0.0.37",
+    "@types/css": "^0.0.38",
     "@types/mocha": "^10.0.8",
     "@types/node": "^22.7.0",
     "assert": "^2.1.0",
