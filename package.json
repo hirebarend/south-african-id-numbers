@@ -13,7 +13,7 @@
   "author": "Barend Erasmus",
   "license": "MIT",
   "devDependencies": {
-    "@types/assert": "^1.5.10",
+    "@types/assert": "^1.5.11",
     "@types/css": "^0.0.38",
     "@types/mocha": "^10.0.9",
     "@types/node": "^22.7.8",
