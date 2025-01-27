@@ -26,7 +26,7 @@ export function generateSouthAfricanIdNumber(
   return result;
 }
 
-export function isValidSouthAfricanIdNumber(str: string | null): boolean {
+export function isValid(str: string | null): boolean {
   if (!str) {
     return false;
   }
@@ -41,11 +41,17 @@ export function isValidSouthAfricanIdNumber(str: string | null): boolean {
     return false;
   }
 
-  if (parseInt(regExpExecArray[2]) > 12) {
+  const month: number = parseInt(regExpExecArray[2]);
+
+  if (month > 12) {
     return false;
   }
 
-  if (parseInt(regExpExecArray[3]) > 31) {
+  const date: number = parseInt(regExpExecArray[3]);
+
+  const arr = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  if (date > arr[month - 1]) {
     return false;
   }
 
@@ -58,14 +64,14 @@ export function isValidSouthAfricanIdNumber(str: string | null): boolean {
   return true;
 }
 
-export function parseSouthAfricanIdNumber(str: string | null): {
+function parse(str: string | null): {
   citizen: boolean;
   dateOfBirth: string;
   gender: 'FEMALE' | 'MALE';
   permanentResident: boolean;
 } {
-  if (!str) {
-    throw new Error('invalid str');
+  if (!str || !isValid(str)) {
+    throw new Error(`invalid ID number: ${str}`);
   }
 
   const regex: RegExp = new RegExp(
@@ -75,15 +81,7 @@ export function parseSouthAfricanIdNumber(str: string | null): {
   const regExpExecArray: RegExpExecArray | null = regex.exec(str);
 
   if (!regExpExecArray) {
-    throw new Error('invalid str');
-  }
-
-  if (parseInt(regExpExecArray[2]) > 12) {
-    throw new Error('invalid str');
-  }
-
-  if (parseInt(regExpExecArray[3]) > 31) {
-    throw new Error('invalid str');
+    throw new Error(`invalid ID number: ${str}`);
   }
 
   const century: number = Math.floor(new Date().getUTCFullYear() / 100) * 100;
@@ -98,5 +96,25 @@ export function parseSouthAfricanIdNumber(str: string | null): {
     dateOfBirth: `${year}-${regExpExecArray[2]}-${regExpExecArray[3]}`,
     gender: parseInt(regExpExecArray[4]) < 5000 ? 'FEMALE' : 'MALE',
     permanentResident: regExpExecArray[5] === '1',
+  };
+}
+
+export const isValidSouthAfricanIdNumber = isValid;
+
+export const parseSouthAfricanIdNumber = parse;
+
+export function SouthAfricanIDNumber(str: string | null) {
+  return {
+    isValid(): boolean {
+      return isValid(str);
+    },
+    parse(): {
+      citizen: boolean;
+      dateOfBirth: string;
+      gender: 'FEMALE' | 'MALE';
+      permanentResident: boolean;
+    } {
+      return parse(str);
+    },
   };
 }

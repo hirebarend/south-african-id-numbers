@@ -1,8 +1,5 @@
 import assert from 'assert';
-import {
-  isValidSouthAfricanIdNumber,
-  parseSouthAfricanIdNumber,
-} from './index';
+import { SouthAfricanIDNumber } from './index';
 import { checksum } from './functions';
 
 describe('#checksum(str: string): number', () => {
@@ -19,39 +16,39 @@ describe('#checksum(str: string): number', () => {
   });
 });
 
-describe('#isValidSouthAfricanIdNumber(str: string): boolean', () => {
+describe('#isValid(): boolean', () => {
   it('given a non 13 character numeric input should return false', () => {
-    assert.equal(isValidSouthAfricanIdNumber('1234567890'), false);
+    assert.equal(SouthAfricanIDNumber('1234567890').isValid(), false);
   });
 
   it('given a 13 character alphanumeric input should return false', () => {
-    assert.equal(isValidSouthAfricanIdNumber('A1B1C1D1E1F1G'), false);
+    assert.equal(SouthAfricanIDNumber('A1B1C1D1E1F1G').isValid(), false);
   });
 
   it('given third last character is not 0 or 1 should return false', () => {
-    assert.equal(isValidSouthAfricanIdNumber('7111207908203'), false);
+    assert.equal(SouthAfricanIDNumber('7111207908203').isValid(), false);
   });
 
   it('given invalid month input should return false', () => {
-    assert.equal(isValidSouthAfricanIdNumber('7115207908004'), false);
+    assert.equal(SouthAfricanIDNumber('7115207908004').isValid(), false);
   });
 
   it('given invalid day input should return false', () => {
-    assert.equal(isValidSouthAfricanIdNumber('7111507908000'), false);
+    assert.equal(SouthAfricanIDNumber('7111507908000').isValid(), false);
   });
 
   it('given third last character is 0 should return true', () => {
-    assert.equal(isValidSouthAfricanIdNumber('7111207908003'), true);
+    assert.equal(SouthAfricanIDNumber('7111207908003').isValid(), true);
   });
 
   it('given third last character is 1 should return true', () => {
-    assert.equal(isValidSouthAfricanIdNumber('7111207908102'), true);
+    assert.equal(SouthAfricanIDNumber('7111207908102').isValid(), true);
   });
 });
 
-describe('#parseSouthAfricanIdNumber(str: string): {}', () => {
+describe('#parse(): {}', () => {
   it('given 7111207908003', () => {
-    assert.deepStrictEqual(parseSouthAfricanIdNumber('7111207908003'), {
+    assert.deepStrictEqual(SouthAfricanIDNumber('7111207908003').parse(), {
       citizen: true,
       dateOfBirth: '1971-11-20',
       gender: 'MALE',
@@ -60,7 +57,7 @@ describe('#parseSouthAfricanIdNumber(str: string): {}', () => {
   });
 
   it('given 7401308315053', () => {
-    assert.deepStrictEqual(parseSouthAfricanIdNumber('7401308315053'), {
+    assert.deepStrictEqual(SouthAfricanIDNumber('7401308315053').parse(), {
       citizen: true,
       dateOfBirth: '1974-01-30',
       gender: 'MALE',
