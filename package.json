@@ -16,7 +16,7 @@
     "@types/assert": "^1.5.11",
     "@types/css": "^0.0.38",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.13.7",
+    "@types/node": "^22.13.8",
     "assert": "^2.1.0",
     "mocha": "^11.1.0",
     "prettier": "^3.5.2",
